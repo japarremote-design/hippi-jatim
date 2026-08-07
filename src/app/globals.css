@@ -76,14 +76,14 @@ input{font:inherit}
 .navbar a:hover,.navbar button.top:hover,.item[data-open="1"] > button.top{color:#fff;border-bottom-color:var(--langit)}
 .item{position:relative}
 .drop{
-  position:absolute;top:100%;left:0;background:#fff;border:1px solid var(--garis);
-  border-top:3px solid var(--langit);min-width:250px;padding:8px 0;
+  position:absolute;top:100%;left:50%;transform:translateX(-50%);background:#fff;border:1px solid var(--garis);
+  border-top:3px solid var(--langit);min-width:250px;max-width:calc(100vw - 32px);padding:8px 0;
   box-shadow:0 18px 40px rgba(13,39,132,.18);display:none;z-index:70;
 }
 .item[data-open="1"] .drop{display:block}
 .drop a{color:var(--tinta);font-weight:500;font-size:13.5px;padding:9px 18px;border:0;display:block}
 .drop a:hover{background:var(--abu);color:var(--biru);border:0}
-.drop .kolom-dpc{display:grid;grid-template-columns:repeat(3,1fr);gap:0;min-width:560px}
+.drop .kolom-dpc{display:grid;grid-template-columns:repeat(3,minmax(150px,1fr));gap:0;width:min(620px,calc(100vw - 64px))}
 .tanda{font-size:9px;opacity:.7}
 .burger{display:none;color:#fff;padding:13px 12px;font-size:20px;line-height:1}
 
@@ -274,18 +274,18 @@ footer a:hover{color:#fff}
   .f-grid{grid-template-columns:1fr 1fr}
   .cari{display:none}
 }
-@media(max-width:720px){
+@media(max-width:860px){
   .burger{display:block;margin-left:auto}
   .navbar .wrap{flex-wrap:wrap}
   .navbar .menu{display:none;width:100%;flex-direction:column;padding-bottom:8px}
   .navbar .menu[data-buka="1"]{display:flex}
   .navbar .menu > *{width:100%}
   .navbar a,.navbar button.top{width:100%;justify-content:space-between;padding:12px 4px}
-  .drop{position:static;box-shadow:none;border:0;border-left:2px solid var(--langit);
-        background:rgba(255,255,255,.08);min-width:0;margin:0 0 8px 4px}
+  .drop{position:static;transform:none;box-shadow:none;border:0;border-left:2px solid var(--langit);
+        background:rgba(255,255,255,.08);min-width:0;max-width:none;margin:0 0 8px 4px}
   .drop a{color:#D5DDF4;padding:9px 14px}
   .drop a:hover{background:rgba(255,255,255,.1);color:#fff}
-  .drop .kolom-dpc{grid-template-columns:1fr;min-width:0;max-height:260px;overflow:auto}
+  .drop .kolom-dpc{grid-template-columns:1fr;width:auto;min-width:0;max-height:260px;overflow:auto}
   .daftar-berita{grid-template-columns:1fr}
   .produk-grid{grid-template-columns:1fr 1fr}
   .masthead .wrap{padding-top:12px;padding-bottom:12px;gap:12px}
