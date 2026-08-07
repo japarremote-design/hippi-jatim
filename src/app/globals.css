@@ -69,6 +69,7 @@ input{font:inherit}
 /* ---------- nav ---------- */
 .navbar{background:var(--biru);position:sticky;top:0;z-index:60;box-shadow:0 1px 0 rgba(0,0,0,.14)}
 .navbar .wrap{display:flex;align-items:center;gap:2px}
+.navbar .menu{display:flex;align-items:center;gap:2px}
 .navbar a,.navbar button.top{
   color:#D5DDF4;font-size:13.5px;font-weight:600;padding:14px 14px;display:flex;align-items:center;gap:6px;
   border-bottom:3px solid transparent;
@@ -275,7 +276,7 @@ footer a:hover{color:#fff}
   .cari{display:none}
 }
 @media(max-width:860px){
-  .burger{display:block;margin-left:auto}
+  .burger{display:block;margin-left:auto;order:-1}
   .navbar .wrap{flex-wrap:wrap}
   .navbar .menu{display:none;width:100%;flex-direction:column;padding-bottom:8px}
   .navbar .menu[data-buka="1"]{display:flex}
