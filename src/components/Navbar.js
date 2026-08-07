@@ -40,7 +40,9 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
-    const tutup = () => setBuka(null);
+    const tutup = (e) => {
+      if (!e.target.closest('.item')) setBuka(null);
+    };
     document.addEventListener('click', tutup);
     return () => document.removeEventListener('click', tutup);
   }, []);
