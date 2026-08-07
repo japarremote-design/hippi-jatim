@@ -1,0 +1,41 @@
+{
+  "rules": {
+    "berita": {
+      ".read": true,
+      ".indexOn": ["tanggal", "terbit"],
+      "$slug": {
+        ".write": "auth != null && auth.token.email_verified === true && auth.token.email === 'qfazdigital@gmail.com'"
+      }
+    },
+    "dpc": {
+      ".read": true,
+      ".indexOn": ["nama"],
+      "$slug": {
+        ".write": "auth != null && auth.token.email_verified === true && auth.token.email === 'qfazdigital@gmail.com'"
+      }
+    },
+    "agenda": {
+      ".read": true,
+      ".indexOn": ["mulai"],
+      "$id": {
+        ".write": "auth != null && auth.token.email_verified === true && auth.token.email === 'qfazdigital@gmail.com'"
+      }
+    },
+    "produk": {
+      ".read": true,
+      "$id": {
+        ".write": "auth != null && auth.token.email_verified === true && auth.token.email === 'qfazdigital@gmail.com'"
+      }
+    },
+    "langganan": {
+      ".read": "auth != null && auth.token.email === 'qfazdigital@gmail.com'",
+      "$id": {
+        ".write": "!data.exists() && newData.hasChildren(['email'])"
+      }
+    },
+    "$lain": {
+      ".read": false,
+      ".write": false
+    }
+  }
+}
