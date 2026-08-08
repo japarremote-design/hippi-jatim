@@ -59,10 +59,12 @@ export default async function ProfilDpc({ params }) {
         <dl className="kartu-info">
           <div><dt>Ketua</dt><dd>{data.ketua || 'Belum diinput'}</dd></div>
           <div><dt>Sekretaris</dt><dd>{data.sekretaris || 'Belum diinput'}</dd></div>
-          <div><dt>Sekretariat</dt><dd>{data.sekretariat || 'Belum diinput'}</dd></div>
-          <div><dt>Kontak</dt><dd>{data.telepon || 'Belum diinput'}</dd></div>
-          <div><dt>Status</dt><dd>{data.status === 'aktif' ? 'Pengurus lengkap' : 'Dalam persiapan'}</dd></div>
+          <div><dt>Bendahara</dt><dd>{data.bendahara || 'Belum diinput'}</dd></div>
           <div><dt>Periode</dt><dd>{data.periode || '—'}</dd></div>
+          <div><dt>Alamat Sekretariat</dt><dd>{data.sekretariat || 'Belum diinput'}</dd></div>
+          <div><dt>Telepon / WhatsApp</dt><dd>{data.telepon || 'Belum diinput'}</dd></div>
+          <div><dt>Email</dt><dd>{data.email || 'Belum diinput'}</dd></div>
+          <div><dt>Status</dt><dd>{data.status === 'aktif' ? 'Pengurus lengkap' : 'Dalam persiapan'}</dd></div>
         </dl>
 
         {pengurus.length > 0 && (
