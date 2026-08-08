@@ -40,7 +40,7 @@ export async function daftarAgenda({ jumlah = 5 } = {}) {
 
 export async function daftarProduk({ jumlah = 8 } = {}) {
   const data = await baca('produk', `limitToLast=${jumlah}`);
-  return keArray(data);
+  return keArray(data).filter((p) => p.aktif !== false);
 }
 
 export async function satuDpc(slug) {

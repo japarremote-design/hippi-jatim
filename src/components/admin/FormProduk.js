@@ -5,7 +5,7 @@ import { ref, get, set, remove } from 'firebase/database';
 import { db } from '@/lib/firebase';
 import UploadBerkas from '@/components/admin/UploadBerkas';
 
-const KOSONG = { nama: '', asal: '', harga: '', gambar: '' };
+const KOSONG = { nama: '', asal: '', harga: '', gambar: '', aktif: true };
 
 export default function FormProduk() {
   const [daftar, setDaftar] = useState([]);
@@ -26,7 +26,10 @@ export default function FormProduk() {
 
   useEffect(() => { muat(); }, []);
 
-  const ubah = (kunci) => (e) => setForm((f) => ({ ...f, [kunci]: e.target.value }));
+  const ubah = (kunci) => (e) => {
+    const nilai = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+    setForm((f) => ({ ...f, [kunci]: nilai }));
+  };
 
   const pilih = (p) => { setTerpilih(p.id); setForm({ ...KOSONG, ...p }); setKabar(null); };
   const baru = () => { setTerpilih(null); setForm(KOSONG); setKabar(null); };
@@ -76,7 +79,7 @@ export default function FormProduk() {
             daftar.map((p) => (
               <button key={p.id} aria-current={terpilih === p.id} onClick={() => pilih(p)}>
                 {p.nama}
-                <span className="kecil">{p.asal} · {p.harga}</span>
+                <span className="kecil">{p.asal} · {p.harga} · {p.aktif === false ? 'Nonaktif' : 'Aktif'}</span>
               </button>
             ))
           )}
@@ -108,6 +111,11 @@ export default function FormProduk() {
           accept="image/*"
         />
         <p className="bantu" style={{ marginTop: -8 }}>Kosongkan kalau belum ada foto — kartunya tetap tampil tanpa gambar.</p>
+
+        <label className="centang">
+          <input type="checkbox" checked={form.aktif !== false} onChange={ubah('aktif')} />
+          Tampilkan di situs
+        </label>
 
         <div className="adm-aksi">
           <button className="tbl" onClick={simpan} disabled={sibuk}>{sibuk ? 'Menyimpan…' : 'Simpan'}</button>
