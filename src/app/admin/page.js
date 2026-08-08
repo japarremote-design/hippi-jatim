@@ -101,9 +101,11 @@ export default function Admin() {
           jalur="buletin"
           labelJudul="Judul edisi"
           placeholderJudul="Buletin Edisi Agustus 2026"
-          labelUrl="URL file (PDF)"
+          labelUrl="File (PDF)"
           placeholderUrl="https://…"
           jalurLihat="/buletin"
+          terimaUnggah
+          acceptUnggah=".pdf,application/pdf"
         />
       )}
       {tab === 'galeri' && (
@@ -111,9 +113,12 @@ export default function Admin() {
           jalur="galeri"
           labelJudul="Judul foto"
           placeholderJudul="Pelantikan DPC Kota Malang"
-          labelUrl="URL gambar"
+          labelUrl="Gambar"
           placeholderUrl="https://…"
           jalurLihat="/galeri"
+          terimaUnggah
+          acceptUnggah="image/*"
+          gambarPratinjau
         />
       )}
       {tab === 'unduhan' && (
@@ -121,9 +126,11 @@ export default function Admin() {
           jalur="unduhan"
           labelJudul="Judul dokumen"
           placeholderJudul="Formulir Pendaftaran Anggota"
-          labelUrl="URL file"
+          labelUrl="File"
           placeholderUrl="https://…"
           jalurLihat="/unduhan"
+          terimaUnggah
+          acceptUnggah=".pdf,.doc,.docx,application/pdf"
         />
       )}
     </div>

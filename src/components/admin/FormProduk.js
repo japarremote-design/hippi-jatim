@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { ref, get, set, remove } from 'firebase/database';
 import { db } from '@/lib/firebase';
+import UploadBerkas from '@/components/admin/UploadBerkas';
 
 const KOSONG = { nama: '', asal: '', harga: '', gambar: '' };
 
@@ -100,11 +101,13 @@ export default function FormProduk() {
             <input value={form.harga} onChange={ubah('harga')} placeholder="Rp 85.000" />
           </div>
         </div>
-        <div className="medan">
-          <label>URL foto produk</label>
-          <input value={form.gambar} onChange={ubah('gambar')} placeholder="https://…" />
-          <div className="bantu">Kosongkan kalau belum ada foto — kartunya tetap tampil tanpa gambar.</div>
-        </div>
+        <UploadBerkas
+          label="Foto produk"
+          value={form.gambar}
+          onChange={(url) => setForm((f) => ({ ...f, gambar: url }))}
+          accept="image/*"
+        />
+        <p className="bantu" style={{ marginTop: -8 }}>Kosongkan kalau belum ada foto — kartunya tetap tampil tanpa gambar.</p>
 
         <div className="adm-aksi">
           <button className="tbl" onClick={simpan} disabled={sibuk}>{sibuk ? 'Menyimpan…' : 'Simpan'}</button>

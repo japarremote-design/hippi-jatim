@@ -3,10 +3,15 @@
 import { useEffect, useState } from 'react';
 import { ref, get, set, remove } from 'firebase/database';
 import { db } from '@/lib/firebase';
+import UploadBerkas from '@/components/admin/UploadBerkas';
 
 // Form generik untuk daftar berbasis tautan: Buletin, Galeri, Unduhan.
 // jalur = path di Realtime Database (mis. "buletin"), labelJudul & labelUrl menyesuaikan konteks.
-export default function FormDaftarTautan({ jalur, labelJudul, placeholderJudul, labelUrl, placeholderUrl, jalurLihat }) {
+// terimaUnggah = true untuk menampilkan tombol unggah file (Cloudinary) selain input URL manual.
+export default function FormDaftarTautan({
+  jalur, labelJudul, placeholderJudul, labelUrl, placeholderUrl, jalurLihat,
+  terimaUnggah = false, acceptUnggah = '*/*', gambarPratinjau = false,
+}) {
   const KOSONG = { judul: '', url: '', keterangan: '' };
   const [daftar, setDaftar] = useState([]);
   const [terpilih, setTerpilih] = useState(null);
@@ -91,10 +96,20 @@ export default function FormDaftarTautan({ jalur, labelJudul, placeholderJudul, 
           <label>{labelJudul}</label>
           <input value={form.judul} onChange={ubah('judul')} placeholder={placeholderJudul} />
         </div>
-        <div className="medan">
-          <label>{labelUrl}</label>
-          <input value={form.url} onChange={ubah('url')} placeholder={placeholderUrl} />
-        </div>
+        {terimaUnggah ? (
+          <UploadBerkas
+            label={labelUrl}
+            value={form.url}
+            onChange={(url) => setForm((f) => ({ ...f, url }))}
+            accept={acceptUnggah}
+            gambarPratinjau={gambarPratinjau}
+          />
+        ) : (
+          <div className="medan">
+            <label>{labelUrl}</label>
+            <input value={form.url} onChange={ubah('url')} placeholder={placeholderUrl} />
+          </div>
+        )}
         <div className="medan">
           <label>Keterangan (opsional)</label>
           <input value={form.keterangan} onChange={ubah('keterangan')} />

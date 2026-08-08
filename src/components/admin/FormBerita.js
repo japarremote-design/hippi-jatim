@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { ref, get, set, remove } from 'firebase/database';
 import { db } from '@/lib/firebase';
 import { tanggalIndo } from '@/lib/dpc';
+import UploadBerkas from '@/components/admin/UploadBerkas';
 
 const KOSONG = {
   judul: '',
@@ -187,14 +188,16 @@ export default function FormBerita() {
           </div>
         </div>
 
-        <div className="medan">
-          <label>URL gambar sampul</label>
-          <input value={form.gambar} onChange={ubah('gambar')} placeholder="https://…" />
-          <div className="bantu">
-            Kosongkan kalau belum ada — sistem otomatis membuat kartu preview biru dari judulnya.
-            Ukuran ideal 1200 × 630 piksel.
-          </div>
-        </div>
+        <UploadBerkas
+          label="Gambar sampul"
+          value={form.gambar}
+          onChange={(url) => setForm((f) => ({ ...f, gambar: url }))}
+          accept="image/*"
+        />
+        <p className="bantu" style={{ marginTop: -8 }}>
+          Kosongkan kalau belum ada — sistem otomatis membuat kartu preview biru dari judulnya.
+          Ukuran ideal 1200 × 630 piksel.
+        </p>
 
         <div className="medan">
           <label>Isi berita (HTML)</label>
