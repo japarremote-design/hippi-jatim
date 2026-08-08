@@ -27,6 +27,34 @@
         ".write": "auth != null && auth.token.email_verified === true && auth.token.email === 'qfazdigital@gmail.com'"
       }
     },
+    "konten": {
+      ".read": true,
+      "$slug": {
+        ".write": "auth != null && auth.token.email_verified === true && auth.token.email === 'qfazdigital@gmail.com'"
+      }
+    },
+    "pengurus-dpd": {
+      ".read": true,
+      ".write": "auth != null && auth.token.email_verified === true && auth.token.email === 'qfazdigital@gmail.com'"
+    },
+    "buletin": {
+      ".read": true,
+      "$id": {
+        ".write": "auth != null && auth.token.email_verified === true && auth.token.email === 'qfazdigital@gmail.com'"
+      }
+    },
+    "galeri": {
+      ".read": true,
+      "$id": {
+        ".write": "auth != null && auth.token.email_verified === true && auth.token.email === 'qfazdigital@gmail.com'"
+      }
+    },
+    "unduhan": {
+      ".read": true,
+      "$id": {
+        ".write": "auth != null && auth.token.email_verified === true && auth.token.email === 'qfazdigital@gmail.com'"
+      }
+    },
     "langganan": {
       ".read": "auth != null && auth.token.email === 'qfazdigital@gmail.com'",
       "$id": {

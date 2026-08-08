@@ -52,3 +52,27 @@ export async function semuaDpc() {
   const data = await baca('dpc');
   return keArray(data);
 }
+
+export async function satuKonten(slug) {
+  return baca(`konten/${encodeURIComponent(slug)}`);
+}
+
+export async function daftarPengurusDpd() {
+  const data = await baca('pengurus-dpd');
+  return Array.isArray(data) ? data.filter(Boolean) : keArray(data);
+}
+
+export async function daftarBuletin() {
+  const data = await baca('buletin');
+  return keArray(data).sort((a, b) => (b.diperbarui || 0) - (a.diperbarui || 0));
+}
+
+export async function daftarGaleri() {
+  const data = await baca('galeri');
+  return keArray(data).sort((a, b) => (b.diperbarui || 0) - (a.diperbarui || 0));
+}
+
+export async function daftarUnduhan() {
+  const data = await baca('unduhan');
+  return keArray(data).sort((a, b) => (b.diperbarui || 0) - (a.diperbarui || 0));
+}

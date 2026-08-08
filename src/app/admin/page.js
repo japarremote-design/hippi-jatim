@@ -6,6 +6,23 @@ import { auth, google } from '@/lib/firebase';
 import { bolehMasuk, ADMIN_EMAILS } from '@/lib/konfigurasi';
 import FormBerita from '@/components/admin/FormBerita';
 import FormDpc from '@/components/admin/FormDpc';
+import FormProduk from '@/components/admin/FormProduk';
+import FormAgenda from '@/components/admin/FormAgenda';
+import FormKonten from '@/components/admin/FormKonten';
+import FormPengurusDpd from '@/components/admin/FormPengurusDpd';
+import FormDaftarTautan from '@/components/admin/FormDaftarTautan';
+
+const TAB = [
+  { kunci: 'berita', label: 'Berita' },
+  { kunci: 'dpc', label: 'Data DPC' },
+  { kunci: 'produk', label: 'Produk' },
+  { kunci: 'agenda', label: 'Agenda' },
+  { kunci: 'konten', label: 'Halaman Statis' },
+  { kunci: 'pengurus', label: 'Pengurus DPD' },
+  { kunci: 'buletin', label: 'Buletin' },
+  { kunci: 'galeri', label: 'Galeri' },
+  { kunci: 'unduhan', label: 'Unduhan' },
+];
 
 export default function Admin() {
   const [pengguna, setPengguna] = useState(undefined); // undefined = masih memeriksa
@@ -66,11 +83,49 @@ export default function Admin() {
       </div>
 
       <div className="adm-tab">
-        <button aria-pressed={tab === 'berita'} onClick={() => setTab('berita')}>Berita</button>
-        <button aria-pressed={tab === 'dpc'} onClick={() => setTab('dpc')}>Data DPC</button>
+        {TAB.map((t) => (
+          <button key={t.kunci} aria-pressed={tab === t.kunci} onClick={() => setTab(t.kunci)}>
+            {t.label}
+          </button>
+        ))}
       </div>
 
-      {tab === 'berita' ? <FormBerita /> : <FormDpc />}
+      {tab === 'berita' && <FormBerita />}
+      {tab === 'dpc' && <FormDpc />}
+      {tab === 'produk' && <FormProduk />}
+      {tab === 'agenda' && <FormAgenda />}
+      {tab === 'konten' && <FormKonten />}
+      {tab === 'pengurus' && <FormPengurusDpd />}
+      {tab === 'buletin' && (
+        <FormDaftarTautan
+          jalur="buletin"
+          labelJudul="Judul edisi"
+          placeholderJudul="Buletin Edisi Agustus 2026"
+          labelUrl="URL file (PDF)"
+          placeholderUrl="https://…"
+          jalurLihat="/buletin"
+        />
+      )}
+      {tab === 'galeri' && (
+        <FormDaftarTautan
+          jalur="galeri"
+          labelJudul="Judul foto"
+          placeholderJudul="Pelantikan DPC Kota Malang"
+          labelUrl="URL gambar"
+          placeholderUrl="https://…"
+          jalurLihat="/galeri"
+        />
+      )}
+      {tab === 'unduhan' && (
+        <FormDaftarTautan
+          jalur="unduhan"
+          labelJudul="Judul dokumen"
+          placeholderJudul="Formulir Pendaftaran Anggota"
+          labelUrl="URL file"
+          placeholderUrl="https://…"
+          jalurLihat="/unduhan"
+        />
+      )}
     </div>
   );
 }

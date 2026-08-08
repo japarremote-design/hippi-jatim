@@ -1,4 +1,7 @@
 import Placeholder from '@/components/Placeholder';
+import { satuKonten } from '@/lib/rtdb';
+
+export const revalidate = 300;
 
 export const metadata = {
   title: 'Sejarah',
@@ -6,12 +9,18 @@ export const metadata = {
   alternates: { canonical: '/tentang/sejarah' },
 };
 
-export default function Sejarah() {
-  return (
-    <Placeholder
-      label="Tentang Kami"
-      judul="Sejarah HIPPI Jawa Timur"
-      teks="Naskah sejarah berdirinya DPD HIPPI Provinsi Jawa Timur sedang disiapkan oleh sekretariat dan akan segera tayang di halaman ini."
-    />
-  );
+export default async function Halaman() {
+  const k = await satuKonten('sejarah');
+  if (k?.isi) {
+    return (
+      <section className="badan">
+        <div className="wrap" style={{ maxWidth: 760 }}>
+          <div className="eyebrow">Tentang Kami</div>
+          <h1 className="judul-bagian" style={{ marginBottom: 20 }}>{k.judul}</h1>
+          <div className="isi" dangerouslySetInnerHTML={{ __html: k.isi }} />
+        </div>
+      </section>
+    );
+  }
+  return <Placeholder label="Tentang Kami" judul="Sejarah" />;
 }
