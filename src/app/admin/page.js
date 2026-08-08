@@ -2,8 +2,9 @@
 
 import { useEffect, useState } from 'react';
 import { onAuthStateChanged, signInWithPopup, signOut } from 'firebase/auth';
-import { auth, google } from '@/lib/firebase';
-import { bolehMasuk, ADMIN_EMAILS } from '@/lib/konfigurasi';
+import { ref, get } from 'firebase/database';
+import { auth, google, db } from '@/lib/firebase';
+import { bolehMasuk, ADMIN_UTAMA, sanitasiEmail } from '@/lib/konfigurasi';
 import FormBerita from '@/components/admin/FormBerita';
 import FormDpc from '@/components/admin/FormDpc';
 import FormProduk from '@/components/admin/FormProduk';
@@ -11,6 +12,7 @@ import FormAgenda from '@/components/admin/FormAgenda';
 import FormKonten from '@/components/admin/FormKonten';
 import FormPengurusDpd from '@/components/admin/FormPengurusDpd';
 import FormDaftarTautan from '@/components/admin/FormDaftarTautan';
+import FormKelolaAdmin from '@/components/admin/FormKelolaAdmin';
 
 const TAB = [
   { kunci: 'berita', label: 'Berita' },
@@ -22,14 +24,32 @@ const TAB = [
   { kunci: 'buletin', label: 'Buletin' },
   { kunci: 'galeri', label: 'Galeri' },
   { kunci: 'unduhan', label: 'Unduhan' },
+  { kunci: 'admin', label: 'Kelola Admin' },
 ];
 
 export default function Admin() {
   const [pengguna, setPengguna] = useState(undefined); // undefined = masih memeriksa
+  const [boleh, setBoleh] = useState(undefined); // undefined = masih memeriksa akses
   const [tab, setTab] = useState('berita');
   const [galat, setGalat] = useState('');
 
-  useEffect(() => onAuthStateChanged(auth, (u) => setPengguna(u || null)), []);
+  useEffect(() => {
+    return onAuthStateChanged(auth, async (u) => {
+      setPengguna(u || null);
+      if (!u) { setBoleh(false); return; }
+
+      // Admin utama & yang diatur lewat env var langsung lolos tanpa perlu tanya database.
+      if (bolehMasuk(u.email)) { setBoleh(true); return; }
+
+      // Selain itu, cek daftar admin tambahan yang diatur lewat tab "Kelola Admin".
+      try {
+        const cuplik = await get(ref(db, `admin-emails/${sanitasiEmail(u.email)}`));
+        setBoleh(cuplik.val() === true);
+      } catch {
+        setBoleh(false);
+      }
+    });
+  }, []);
 
   const masuk = async () => {
     setGalat('');
@@ -44,7 +64,7 @@ export default function Admin() {
     }
   };
 
-  if (pengguna === undefined) {
+  if (pengguna === undefined || (pengguna && boleh === undefined)) {
     return <div className="gerbang"><p>Memeriksa sesi…</p></div>;
   }
 
@@ -59,13 +79,13 @@ export default function Admin() {
     );
   }
 
-  if (!bolehMasuk(pengguna.email)) {
+  if (!boleh) {
     return (
       <div className="gerbang">
         <h1>Akun ini tidak punya akses</h1>
         <p>
-          Masuk sebagai <strong>{pengguna.email}</strong>, sementara yang diizinkan hanya{' '}
-          {ADMIN_EMAILS.join(', ')}.
+          Masuk sebagai <strong>{pengguna.email}</strong>. Minta admin yang sudah punya akses
+          untuk menambahkan email ini lewat tab &quot;Kelola Admin&quot; di panel.
         </p>
         <button className="tbl sekunder" onClick={() => signOut(auth)}>Keluar</button>
       </div>
@@ -133,6 +153,7 @@ export default function Admin() {
           acceptUnggah=".pdf,.doc,.docx,application/pdf"
         />
       )}
+      {tab === 'admin' && <FormKelolaAdmin emailSaya={pengguna.email} />}
     </div>
   );
 }

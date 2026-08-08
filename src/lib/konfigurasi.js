@@ -18,12 +18,25 @@ export const FIREBASE = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID || '1:37187040102:web:56b2d84ae1e9e0dd5f4ea7',
 };
 
-// Email yang boleh masuk panel admin. Harus sama persis dengan isi database.rules.json.
+// Admin utama yang permanen — selalu punya akses, tidak bergantung database.
+// Ini "jaring pengaman": walau daftar admin di database kosong/salah/terhapus,
+// akun ini tetap bisa masuk untuk memperbaikinya. Harus SAMA PERSIS dengan
+// yang tertulis di database.rules.json.
+export const ADMIN_UTAMA = 'qfazdigital@gmail.com';
+
+// Email yang boleh masuk panel admin lewat env var (opsional, cara lama).
+// Admin tambahan sekarang lebih baik diatur lewat tab "Kelola Admin" di panel,
+// bukan lewat variabel ini.
 export const ADMIN_EMAILS = (
-  process.env.NEXT_PUBLIC_ADMIN_EMAILS || 'qfazdigital@gmail.com'
+  process.env.NEXT_PUBLIC_ADMIN_EMAILS || ADMIN_UTAMA
 )
   .split(',')
   .map((e) => e.trim().toLowerCase())
   .filter(Boolean);
 
 export const bolehMasuk = (email) => !!email && ADMIN_EMAILS.includes(email.toLowerCase());
+
+// Firebase Realtime Database tidak mengizinkan titik (.) di dalam key,
+// jadi email disimpan dengan titik diganti koma. Pola yang sama dipakai
+// di database.rules.json — kalau diubah di sini, ubah juga di sana.
+export const sanitasiEmail = (email) => (email || '').trim().toLowerCase().replace(/\./g, ',');

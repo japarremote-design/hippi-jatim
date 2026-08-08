@@ -4,55 +4,61 @@
       ".read": true,
       ".indexOn": ["tanggal", "terbit"],
       "$slug": {
-        ".write": "auth != null && auth.token.email_verified === true && auth.token.email === 'qfazdigital@gmail.com'"
+        ".write": "auth != null && auth.token.email_verified === true && (auth.token.email === 'qfazdigital@gmail.com' || root.child('admin-emails').child(auth.token.email.replace('.', ',')).val() === true)"
       }
     },
     "dpc": {
       ".read": true,
       ".indexOn": ["nama"],
       "$slug": {
-        ".write": "auth != null && auth.token.email_verified === true && auth.token.email === 'qfazdigital@gmail.com'"
+        ".write": "auth != null && auth.token.email_verified === true && (auth.token.email === 'qfazdigital@gmail.com' || root.child('admin-emails').child(auth.token.email.replace('.', ',')).val() === true)"
       }
     },
     "agenda": {
       ".read": true,
       ".indexOn": ["mulai"],
       "$id": {
-        ".write": "auth != null && auth.token.email_verified === true && auth.token.email === 'qfazdigital@gmail.com'"
+        ".write": "auth != null && auth.token.email_verified === true && (auth.token.email === 'qfazdigital@gmail.com' || root.child('admin-emails').child(auth.token.email.replace('.', ',')).val() === true)"
       }
     },
     "produk": {
       ".read": true,
       "$id": {
-        ".write": "auth != null && auth.token.email_verified === true && auth.token.email === 'qfazdigital@gmail.com'"
+        ".write": "auth != null && auth.token.email_verified === true && (auth.token.email === 'qfazdigital@gmail.com' || root.child('admin-emails').child(auth.token.email.replace('.', ',')).val() === true)"
       }
     },
     "konten": {
       ".read": true,
       "$slug": {
-        ".write": "auth != null && auth.token.email_verified === true && auth.token.email === 'qfazdigital@gmail.com'"
+        ".write": "auth != null && auth.token.email_verified === true && (auth.token.email === 'qfazdigital@gmail.com' || root.child('admin-emails').child(auth.token.email.replace('.', ',')).val() === true)"
       }
     },
     "pengurus-dpd": {
       ".read": true,
-      ".write": "auth != null && auth.token.email_verified === true && auth.token.email === 'qfazdigital@gmail.com'"
+      ".write": "auth != null && auth.token.email_verified === true && (auth.token.email === 'qfazdigital@gmail.com' || root.child('admin-emails').child(auth.token.email.replace('.', ',')).val() === true)"
     },
     "buletin": {
       ".read": true,
       "$id": {
-        ".write": "auth != null && auth.token.email_verified === true && auth.token.email === 'qfazdigital@gmail.com'"
+        ".write": "auth != null && auth.token.email_verified === true && (auth.token.email === 'qfazdigital@gmail.com' || root.child('admin-emails').child(auth.token.email.replace('.', ',')).val() === true)"
       }
     },
     "galeri": {
       ".read": true,
       "$id": {
-        ".write": "auth != null && auth.token.email_verified === true && auth.token.email === 'qfazdigital@gmail.com'"
+        ".write": "auth != null && auth.token.email_verified === true && (auth.token.email === 'qfazdigital@gmail.com' || root.child('admin-emails').child(auth.token.email.replace('.', ',')).val() === true)"
       }
     },
     "unduhan": {
       ".read": true,
       "$id": {
-        ".write": "auth != null && auth.token.email_verified === true && auth.token.email === 'qfazdigital@gmail.com'"
+        ".write": "auth != null && auth.token.email_verified === true && (auth.token.email === 'qfazdigital@gmail.com' || root.child('admin-emails').child(auth.token.email.replace('.', ',')).val() === true)"
+      }
+    },
+    "admin-emails": {
+      ".read": "auth != null",
+      "$key": {
+        ".write": "auth != null && auth.token.email_verified === true && (auth.token.email === 'qfazdigital@gmail.com' || root.child('admin-emails').child(auth.token.email.replace('.', ',')).val() === true)"
       }
     },
     "langganan": {
